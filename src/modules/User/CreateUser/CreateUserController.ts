@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
-import { checkUserData } from "../../../utils/CheckUserData";
+import { cp } from "fs";
+import { checkUserData, validateCpf } from "../../../utils/CheckUserData";
+import { ErrorPrivate } from "../../../utils/ExceptionError";
 import { CreateUserService } from "./CreateUserService";
 
 export class CreateUserController {
@@ -7,24 +9,19 @@ export class CreateUserController {
     let { name, email, cpf, password } = request.body;
 
     if (!name || !email || !cpf || !password) {
-      return response
-        .status(400)
-        .json({ info: "all fields must be filled in!" });
+      throw new ErrorPrivate("Not found!", 404, true);
     }
-    const verify = await checkUserData(cpf, email);
 
-    if (verify) {
-      return response.status(409).json({
-        info: "The data provided is already being used!",
-      });
-    }
+    await checkUserData(cpf, email);
+
+    cpf = String(validateCpf(cpf));
 
     const createUserService = new CreateUserService();
     const data = await createUserService.createUser({
       name,
       email,
-      cpf,
       password,
+      cpf,
     });
 
     return response.json(data);

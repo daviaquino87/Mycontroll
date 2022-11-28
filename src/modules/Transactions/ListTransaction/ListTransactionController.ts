@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ErrorPrivate } from "../../../utils/ExceptionError";
 import { ListTransactionService } from "./ListTransactionService";
 
 export class ListTransactionController {
@@ -6,9 +7,7 @@ export class ListTransactionController {
     const { user_id } = request.body;
 
     if (!user_id) {
-      return response
-        .status(400)
-        .json({ info: "the field user_id must be filled in!" });
+      throw new ErrorPrivate("Not found!", 404, true);
     }
 
     const listTransaction = new ListTransactionService();

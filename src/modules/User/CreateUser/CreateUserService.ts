@@ -13,6 +13,10 @@ export class CreateUserService {
       cpf,
     });
 
+    if (!newUser) {
+      throw new Error();
+    }
+
     const data = await userService.save(newUser);
 
     return data;

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { ErrorPrivate } from "../../../utils/ExceptionError";
 import { UpdateTransactionService } from "./UpdateTransactionService";
 
 export class UpdateTransactionController {
@@ -6,9 +7,7 @@ export class UpdateTransactionController {
     const { user_id, ...rest } = request.body;
     const { transacion_id } = request.params;
     if (!transacion_id || !user_id) {
-      return response
-        .status(400)
-        .json({ info: "the field transacion_id must be filled in!" });
+      throw new ErrorPrivate("Not found!", 404, true);
     }
 
     const updateTransaction = new UpdateTransactionService();

@@ -16,7 +16,7 @@ export class DeleteTransactionService {
     });
 
     if (!transaction) {
-      throw new ErrorPrivate("Not found transaction!", 404);
+      throw new ErrorPrivate("Not found!", 404, true);
     }
 
     const data = await transactionService.delete(id);

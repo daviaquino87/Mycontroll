@@ -17,7 +17,7 @@ export class UpdateTransactionService {
     });
 
     if (!transaction) {
-      throw new ErrorPrivate("Not found transaction", 404);
+      throw new ErrorPrivate("Not found!", 404, true);
     }
 
     const update = await transactionService.update(id, {

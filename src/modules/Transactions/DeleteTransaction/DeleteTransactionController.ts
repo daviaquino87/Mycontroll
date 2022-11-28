@@ -8,7 +8,7 @@ export class DeleteTransactionController {
     const { id } = request.params;
 
     if (!user_id || !id) {
-      throw new ErrorPrivate("all fields must be filled in!", 400);
+      throw new ErrorPrivate("Not found!", 404, true);
     }
 
     const transactionService = new DeleteTransactionService();

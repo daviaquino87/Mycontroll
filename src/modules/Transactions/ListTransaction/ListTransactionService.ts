@@ -11,11 +11,20 @@ export class ListTransactionService {
     const user = await userSevice.findOneBy({ id: Number(user_id) });
 
     if (!user) {
-      throw new ErrorPrivate("Not found!", 404);
+      throw new ErrorPrivate("Not found!", 404, true);
     }
 
-    const transactions = await transactionService.findBy({
-      user: { id: Number(user_id) },
+    const transactions = await transactionService.find({
+      where: {
+        user: {
+          id: Number(user_id),
+        },
+      },
+      order: {
+        id: {
+          direction: "DESC",
+        },
+      },
     });
 
     return transactions;
