@@ -8,7 +8,7 @@ export function errorValidator(
   next: NextFunction
 ) {
   const statusCode = error.statusCode ?? 500;
-  const messageError = error.message || "Internal error server!";
+  const messageError = error.message ?? "Internal error server!";
 
   return response.status(statusCode).json({ info: messageError });
 }
