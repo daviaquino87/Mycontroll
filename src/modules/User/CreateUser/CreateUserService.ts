@@ -5,19 +5,16 @@ import { CreateUser } from "./interface/CreateUserInterface";
 export class CreateUserService {
   async createUser({ name, email, password, cpf }: CreateUser) {
     const userService = AppdataSource.getRepository(User);
-    try {
-      const newUser = userService.create({
-        name,
-        email,
-        password,
-        cpf,
-      });
 
-      const data = await userService.save(newUser);
+    const newUser = userService.create({
+      name,
+      email,
+      password,
+      cpf,
+    });
 
-      return data;
-    } catch (error) {
-      return error;
-    }
+    const data = await userService.save(newUser);
+
+    return data;
   }
 }

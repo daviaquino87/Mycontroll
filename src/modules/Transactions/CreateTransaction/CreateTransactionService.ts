@@ -11,19 +11,15 @@ export class CreateTransactionService {
   }: TransactionInterface) {
     const transactionService = AppdataSource.getRepository(Transaction);
 
-    try {
-      const newTransaction = transactionService.create({
-        value,
-        type,
-        description,
-        user: { id: user_id },
-      });
+    const newTransaction = transactionService.create({
+      value,
+      type,
+      description,
+      user: { id: user_id },
+    });
 
-      const data = await transactionService.save(newTransaction);
+    const data = await transactionService.save(newTransaction);
 
-      return data;
-    } catch (error) {
-      return error;
-    }
+    return data;
   }
 }

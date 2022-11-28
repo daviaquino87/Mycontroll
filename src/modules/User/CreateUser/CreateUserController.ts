@@ -11,33 +11,22 @@ export class CreateUserController {
         .status(400)
         .json({ info: "all fields must be filled in!" });
     }
+    const verify = await checkUserData(cpf, email);
 
-    try {
-      const verify = await checkUserData(cpf, email);
-
-      if (verify) {
-        return response.status(409).json({
-          info: "The data provided is already being used!",
-        });
-      }
-    } catch (error) {
-      console.log(error);
-      return response.status(500).json({ info: "internal error server!" });
-    }
-
-    try {
-      const createUserService = new CreateUserService();
-      const data = await createUserService.createUser({
-        name,
-        email,
-        cpf,
-        password,
+    if (verify) {
+      return response.status(409).json({
+        info: "The data provided is already being used!",
       });
-
-      return response.json(data);
-    } catch (error) {
-      console.log(error);
-      return response.status(500).json({ info: "internal error server!" });
     }
+
+    const createUserService = new CreateUserService();
+    const data = await createUserService.createUser({
+      name,
+      email,
+      cpf,
+      password,
+    });
+
+    return response.json(data);
   }
 }
