@@ -1,11 +1,14 @@
 import { NextFunction, Request, Response } from "express";
+import { ErrorPrivate } from "../utils/ExceptionError";
 
 export function errorValidator(
-  error: Error,
+  error: Error & Partial<ErrorPrivate>,
   request: Request,
   response: Response,
   next: NextFunction
 ) {
-  console.log(error.message);
-  return response.status(500).json({ info: "Internal error server!" });
+  const statusCode = error.statusCode ?? 500;
+  const messageError = error.message || "Internal error server!";
+
+  return response.status(statusCode).json({ info: messageError });
 }
