@@ -10,6 +10,10 @@ export class CreateTransactionController {
       throw new ErrorPrivate("all fields must be filled in!", 400, true);
     }
 
+    if (type != "buy" && type != "deposite") {
+      throw new ErrorPrivate("Not found", 404, true);
+    }
+
     const createTransaction = new CreateTransactionService();
     const data = await createTransaction.create({
       value,
