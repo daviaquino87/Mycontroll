@@ -19,8 +19,8 @@ export class DeleteTransactionService {
       throw new ErrorPrivate("Not found!", 404, true);
     }
 
-    const data = await transactionService.delete(id);
+    await transactionService.delete(id);
 
-    return data;
+    return transaction;
   }
 }

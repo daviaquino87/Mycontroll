@@ -15,6 +15,7 @@ export function errorValidator(
   const messageError = error.message ?? "Internal error server!";
 
   if (error.privateError != true) {
+    console.log(error.message);
     return response.status(500).json({ info: "Internal error server!" });
   }
 

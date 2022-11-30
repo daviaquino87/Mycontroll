@@ -13,8 +13,8 @@ export class DeleteTransactionController {
 
     const transactionService = new DeleteTransactionService();
 
-    await transactionService.delete(Number(id), user_id);
+    const data = await transactionService.delete(Number(id), user_id);
 
-    return response.json({ info: "Successfully deleted transaction" });
+    return response.json(data);
   }
 }
