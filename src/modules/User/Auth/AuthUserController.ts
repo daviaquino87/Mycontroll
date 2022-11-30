@@ -16,4 +16,20 @@ export class AuthUserController {
 
     return response.json(data);
   }
+
+  async logout(request: Request, response: Response) {
+    const authService = new AuthUserService();
+
+    const { authorization } = request.headers;
+
+    if (!authorization) {
+      throw new ErrorPrivate("Unauthorized!", 401, true);
+    }
+
+    const token = String(authorization).split(" ");
+
+    const data = await authService.logout(token[1]);
+
+    return response.json({ info: "successfully logged out!" });
+  }
 }

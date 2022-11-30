@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { AppdataSource } from "../database/data-source";
 import { User } from "../database/entities/User";
+import { WhiteToken } from "../database/entities/WhiteTokens";
 import { ErrorPrivate } from "../utils/ExceptionError";
 
 type JWTPlayload = {
@@ -21,10 +22,12 @@ export const authMiddleware = async (
   }
 
   const userService = AppdataSource.getRepository(User);
+  const tokenService = AppdataSource.getRepository(WhiteToken);
 
   const token = String(authorization).split(" ");
+  const tokenIsValid = await tokenService.findOneBy({ token: token[1] });
 
-  if (token[0] != "Bearer") {
+  if (token[0] != "Bearer" || !tokenIsValid) {
     throw new ErrorPrivate("Unauthorized!", 401, true);
   }
 

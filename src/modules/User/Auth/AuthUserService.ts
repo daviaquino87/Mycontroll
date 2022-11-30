@@ -3,10 +3,12 @@ import { User } from "../../../database/entities/User";
 import { ErrorPrivate } from "../../../utils/ExceptionError";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { WhiteToken } from "../../../database/entities/WhiteTokens";
 
 export class AuthUserService {
   async login(email: string, password: string) {
     const userService = AppdataSource.getRepository(User);
+    const tokenService = AppdataSource.getRepository(WhiteToken);
 
     const user = await userService.findOneBy({ email });
 
@@ -32,6 +34,19 @@ export class AuthUserService {
       authorized: true,
     };
 
+    const newToken = tokenService.create({ token });
+    await tokenService.save(newToken);
+
     return data;
+  }
+
+  async logout(token: string) {
+    const tokenService = AppdataSource.getRepository(WhiteToken);
+    const mytoken = await tokenService.findOneBy({ token });
+    if (!mytoken) {
+      throw new ErrorPrivate("token not found", 401, true);
+    }
+    await tokenService.delete(mytoken);
+    return true;
   }
 }
