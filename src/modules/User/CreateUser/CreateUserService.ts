@@ -17,8 +17,10 @@ export class CreateUserService {
       throw new Error();
     }
 
-    const data = await userService.save(newUser);
+    const user = await userService.save(newUser);
 
-    return data;
+    const { password: _, ...rest } = newUser;
+
+    return rest;
   }
 }

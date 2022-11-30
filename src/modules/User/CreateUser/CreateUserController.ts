@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
-import { cp } from "fs";
 import { checkUserData, validateCpf } from "../../../utils/CheckUserData";
 import { ErrorPrivate } from "../../../utils/ExceptionError";
 import { CreateUserService } from "./CreateUserService";
+import bcrypt from "bcrypt";
 
 export class CreateUserController {
   async create(request: Request, response: Response) {
@@ -15,12 +15,13 @@ export class CreateUserController {
     await checkUserData(cpf, email);
 
     cpf = String(validateCpf(cpf));
+    const passwordhash = await bcrypt.hash(password, 10);
 
     const createUserService = new CreateUserService();
     const data = await createUserService.createUser({
       name,
       email,
-      password,
+      password: passwordhash,
       cpf,
     });
 
