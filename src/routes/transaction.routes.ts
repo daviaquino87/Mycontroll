@@ -1,4 +1,5 @@
 import express from "express";
+import { authMiddleware } from "../middleware/auth-user";
 import { CreateTransactionController } from "../modules/Transactions/CreateTransaction/CreateTransactionController";
 import { DeleteTransactionController } from "../modules/Transactions/DeleteTransaction/DeleteTransactionController";
 import { ListMontantController } from "../modules/Transactions/ListMontantByTransaction/ListMontantController";
@@ -11,6 +12,7 @@ const deleteTransactionController = new DeleteTransactionController();
 const listMontantController = new ListMontantController();
 
 export const transactionRoutes = express();
+transactionRoutes.use(authMiddleware);
 
 transactionRoutes.post("/transaction", createTransactionController.create);
 transactionRoutes.get("/transaction", listTransactionController.list);
