@@ -4,7 +4,7 @@ import { ListMontantService } from "./ListMontantService";
 
 export class ListMontantController {
   async list(request: Request, response: Response) {
-    const { user_id } = request.body;
+    const user_id = request.user.id;
 
     if (!user_id) {
       throw new ErrorPrivate("Not found!", 404, true);

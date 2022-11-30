@@ -4,7 +4,8 @@ import { CreateTransactionService } from "./CreateTransactionService";
 
 export class CreateTransactionController {
   async create(request: Request, response: Response) {
-    let { value, type, description, user_id } = request.body;
+    let { value, type, description } = request.body;
+    const user_id = request.user.id;
 
     if (!value || !type || !user_id) {
       throw new ErrorPrivate("all fields must be filled in!", 400, true);

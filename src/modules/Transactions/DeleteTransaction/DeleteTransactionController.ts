@@ -4,7 +4,7 @@ import { DeleteTransactionService } from "./DeleteTransactionService";
 
 export class DeleteTransactionController {
   async delete(request: Request, response: Response) {
-    const { user_id } = request.body;
+    const user_id = request.user.id;
     const { id } = request.params;
 
     if (!user_id || !id) {

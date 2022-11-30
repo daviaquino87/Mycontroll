@@ -4,7 +4,7 @@ import { User } from "../../../database/entities/User";
 import { ErrorPrivate } from "../../../utils/ExceptionError";
 
 export class ListMontantService {
-  async list(user_id: User) {
+  async list(user_id: number) {
     const transactionService = AppdataSource.getRepository(Transaction);
     const userSevice = AppdataSource.getRepository(User);
 

@@ -45,5 +45,9 @@ export const authMiddleware = async (
     throw new ErrorPrivate("Unauthorized!", 401, true);
   }
 
+  const { password: _, ...userloggad } = user;
+
+  request.user = userloggad;
+
   next();
 };
