@@ -20,9 +20,7 @@ export class UpdateTransactionService {
       throw new ErrorPrivate("Not found!", 404, true);
     }
 
-    const update = await transactionService.update(id, {
-      ...data,
-    });
+    await transactionService.update(id, { ...data });
 
     return transaction;
   }

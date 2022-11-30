@@ -13,6 +13,6 @@ export class ListMontantController {
     const listMontant = new ListMontantService();
     const data = await listMontant.list(user_id);
 
-    return response.json({ montant: data });
+    return response.json({ montant: Number(data.toFixed(2)) });
   }
 }
