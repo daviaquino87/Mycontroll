@@ -28,7 +28,7 @@ export class AuthUserController {
 
     const token = String(authorization).split(" ");
 
-    const data = await authService.logout(token[1]);
+    await authService.logout(token[1]);
 
     return response.json({ info: "successfully logged out!" });
   }

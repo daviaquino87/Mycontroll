@@ -1,10 +1,4 @@
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Transaction } from "./Transaction";
 
 @Entity("users")
@@ -24,6 +18,6 @@ export class User {
   @Column({ type: "text" })
   password: string;
 
-  @OneToMany(() => Transaction, (transaction) => transaction.user)
+  @OneToMany(() => Transaction, (user) => user.user, { cascade: true })
   transactions: Transaction[];
 }

@@ -1,7 +1,9 @@
+import { join } from "path";
 import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -21,9 +23,6 @@ export class Transaction {
   @Column({ type: "text", nullable: true })
   description: string;
 
-  @ManyToOne(() => User, (user) => user.transactions, {
-    onDelete: "CASCADE",
-  })
-  @JoinColumn({ name: "user_id" })
+  @ManyToOne(() => User, (user) => user.transactions, { onDelete: "CASCADE" })
   user: User;
 }
