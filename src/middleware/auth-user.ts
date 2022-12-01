@@ -17,7 +17,7 @@ export const authMiddleware = async (
 ) => {
   const { authorization } = request.headers;
 
-  if (!authorization) {
+  if (!authorization || authorization.length < 10) {
     throw new ErrorPrivate("Unauthorized!", 401, true);
   }
 
@@ -25,6 +25,7 @@ export const authMiddleware = async (
   const tokenService = AppdataSource.getRepository(WhiteToken);
 
   const token = String(authorization).split(" ");
+
   const tokenIsValid = await tokenService.findOneBy({ token: token[1] });
 
   if (token[0] != "Bearer" || !tokenIsValid) {
@@ -34,6 +35,7 @@ export const authMiddleware = async (
   const verify = jwt.decode(token[1]) as JWTPlayload;
 
   if (new Date(verify.exp * 1000).getTime() < new Date().getTime()) {
+    await tokenService.delete(token[1]);
     throw new ErrorPrivate("Unauthorized!", 401, true);
   }
 

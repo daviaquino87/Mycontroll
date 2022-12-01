@@ -11,6 +11,11 @@ export class AuthUserService {
     const tokenService = AppdataSource.getRepository(WhiteToken);
 
     const user = await userService.findOneBy({ email });
+    const hasLogged = await tokenService.findOneBy({ userId: user?.id });
+
+    if (hasLogged) {
+      throw new ErrorPrivate("User already logged in", 401, true);
+    }
 
     if (!user) {
       throw new ErrorPrivate("Incorrect email or password", 400, true);
@@ -34,7 +39,7 @@ export class AuthUserService {
       authorized: true,
     };
 
-    const newToken = tokenService.create({ token });
+    const newToken = tokenService.create({ token, userId: user.id });
     await tokenService.save(newToken);
 
     return data;
