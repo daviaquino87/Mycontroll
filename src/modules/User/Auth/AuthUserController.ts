@@ -9,7 +9,7 @@ export class AuthUserController {
     const authService = new AuthUserService();
 
     if (!email || !password) {
-      throw new ErrorPrivate("Not found!", 404, true);
+      throw new ErrorPrivate("Not found!", 404);
     }
 
     const data = await authService.login(email, password);
@@ -23,7 +23,7 @@ export class AuthUserController {
     const { authorization } = request.headers;
 
     if (!authorization) {
-      throw new ErrorPrivate("Unauthorized!", 401, true);
+      throw new ErrorPrivate("Unauthorized!", 401);
     }
 
     const token = String(authorization).split(" ");

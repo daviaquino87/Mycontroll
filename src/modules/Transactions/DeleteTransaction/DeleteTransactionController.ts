@@ -8,7 +8,7 @@ export class DeleteTransactionController {
     const { id } = request.params;
 
     if (!user_id || !id) {
-      throw new ErrorPrivate("Not found!", 404, true);
+      throw new ErrorPrivate("Not found!", 404);
     }
 
     const transactionService = new DeleteTransactionService();

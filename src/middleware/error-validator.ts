@@ -14,10 +14,10 @@ export function errorValidator(
   const statusCode = error.statusCode ?? 500;
   const messageError = error.message ?? "Internal error server!";
 
-  if (error.privateError != true) {
-    console.log(error.message);
-    return response.status(500).json({ info: "Internal error server!" });
+  if (error instanceof ErrorPrivate) {
+    return response.status(statusCode).json({ info: messageError });
   }
 
-  return response.status(statusCode).json({ info: messageError });
+  console.log(error.message);
+  return response.status(500).json({ info: "Internal error server!" });
 }

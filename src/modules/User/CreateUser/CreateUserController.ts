@@ -9,7 +9,7 @@ export class CreateUserController {
     let { name, email, cpf, password } = request.body;
 
     if (!name || !email || !cpf || !password) {
-      throw new ErrorPrivate("Not found!", 404, true);
+      throw new ErrorPrivate("Not found!", 404);
     }
 
     await checkUserData(cpf, email);

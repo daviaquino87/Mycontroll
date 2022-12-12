@@ -7,7 +7,7 @@ export class ListTransactionController {
     const user_id = request.user.id;
 
     if (!user_id) {
-      throw new ErrorPrivate("Not found!", 404, true);
+      throw new ErrorPrivate("Not found!", 404);
     }
 
     const listTransaction = new ListTransactionService();

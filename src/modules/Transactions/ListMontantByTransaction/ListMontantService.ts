@@ -11,7 +11,7 @@ export class ListMontantService {
     const user = await userSevice.findOneBy({ id: Number(user_id) });
 
     if (!user) {
-      throw new ErrorPrivate("Not found!", 404, true);
+      throw new ErrorPrivate("Not found!", 404);
     }
 
     const transactions = await transactionService.find({

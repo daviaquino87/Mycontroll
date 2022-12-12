@@ -11,14 +11,14 @@ export const checkUserData = async (cpf: string, email: string) => {
   if (!verifycpf && !verifemail) {
     return;
   }
-  throw new ErrorPrivate("The data provided is already being used!", 409, true);
+  throw new ErrorPrivate("The data provided is already being used!", 409);
 };
 
 export function validateCpf(cpf: string) {
   const cpfFormated = cpf.replace(/\D/g, "");
 
   if (cpfFormated.length < 11) {
-    throw new ErrorPrivate("informed invalid cpf!", 404, true);
+    throw new ErrorPrivate("informed invalid cpf!", 404);
   }
 
   var sum;
@@ -32,7 +32,7 @@ export function validateCpf(cpf: string) {
 
   if (Rest == 10 || Rest == 11) Rest = 0;
   if (Rest != parseInt(cpfFormated.substring(9, 10))) {
-    throw new ErrorPrivate("informed invalid cpf!", 404, true);
+    throw new ErrorPrivate("informed invalid cpf!", 404);
   }
 
   sum = 0;
@@ -42,7 +42,7 @@ export function validateCpf(cpf: string) {
 
   if (Rest == 10 || Rest == 11) Rest = 0;
   if (Rest != parseInt(cpfFormated.substring(10, 11))) {
-    throw new ErrorPrivate("informed invalid cpf!", 404, true);
+    throw new ErrorPrivate("informed invalid cpf!", 404);
   }
   return cpfFormated;
 }

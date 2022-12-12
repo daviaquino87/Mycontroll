@@ -8,11 +8,11 @@ export class CreateTransactionController {
     const user_id = request.user.id;
 
     if (!value || !type || !user_id) {
-      throw new ErrorPrivate("all fields must be filled in!", 400, true);
+      throw new ErrorPrivate("all fields must be filled in!", 400);
     }
 
     if (type != "buy" && type != "deposite") {
-      throw new ErrorPrivate("Not found", 404, true);
+      throw new ErrorPrivate("Not found", 404);
     }
 
     const createTransaction = new CreateTransactionService();

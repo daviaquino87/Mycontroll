@@ -14,24 +14,24 @@ export class AuthUserService {
     const hasLogged = await tokenService.findOneBy({ userId: user?.id });
 
     if (hasLogged) {
-      throw new ErrorPrivate("User already logged in", 401, true);
+      throw new ErrorPrivate("User already logged in", 401);
     }
 
     if (!user) {
-      throw new ErrorPrivate("Incorrect email or password", 400, true);
+      throw new ErrorPrivate("Incorrect email or password", 400);
     }
 
     const verifyPass = await bcrypt.compare(password, user.password);
 
     if (!verifyPass) {
-      throw new ErrorPrivate("Incorrect email or password", 400, true);
+      throw new ErrorPrivate("Incorrect email or password", 400);
     }
 
     const token = jwt.sign({ id: user.id }, String(process.env.JWT_PASS), {
       expiresIn: 3600,
     });
 
-    const { password: _, ...userlogin } = user;
+    const { password: _, cpf: __, ...userlogin } = user;
 
     const data = {
       user: userlogin,
@@ -49,7 +49,7 @@ export class AuthUserService {
     const tokenService = AppdataSource.getRepository(WhiteToken);
     const mytoken = await tokenService.findOneBy({ token });
     if (!mytoken) {
-      throw new ErrorPrivate("token not found", 401, true);
+      throw new ErrorPrivate("token not found", 401);
     }
     await tokenService.delete(mytoken);
     return true;

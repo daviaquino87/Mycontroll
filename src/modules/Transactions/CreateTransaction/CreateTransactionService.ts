@@ -17,7 +17,7 @@ export class CreateTransactionService {
     const user = await userService.findOneBy({ id: user_id });
 
     if (!user) {
-      throw new ErrorPrivate("Not found!", 400, true);
+      throw new ErrorPrivate("Not found!", 400);
     }
 
     const newTransaction = transactionService.create({

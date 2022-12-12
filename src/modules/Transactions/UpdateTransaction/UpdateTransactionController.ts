@@ -8,7 +8,7 @@ export class UpdateTransactionController {
     const { ...rest } = request.body;
     const { transacion_id } = request.params;
     if (!transacion_id || !user_id) {
-      throw new ErrorPrivate("Not found!", 404, true);
+      throw new ErrorPrivate("Not found!", 404);
     }
 
     const updateTransaction = new UpdateTransactionService();

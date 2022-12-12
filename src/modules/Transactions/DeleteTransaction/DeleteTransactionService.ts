@@ -16,7 +16,7 @@ export class DeleteTransactionService {
     });
 
     if (!transaction) {
-      throw new ErrorPrivate("Not found!", 404, true);
+      throw new ErrorPrivate("Not found!", 404);
     }
 
     await transactionService.delete(id);
